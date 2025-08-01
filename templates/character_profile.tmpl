@@ -1,0 +1,60 @@
+{{template "_header.tmpl" .Common}}
+	{{with .Character}}
+		<div class="box">
+			<h1>Character Information</h1>
+			<table class="info">
+				<tr>
+					<th>Name:</th>
+					<td>{{.Name}}</td>
+				</tr>
+				<tr>
+					<th>Sex:</th>
+					{{if eq .Sex 1}}
+						<td>male</td>
+					{{else if eq .Sex 2}}
+						<td>female</td>
+					{{else}}
+						<td>unknown</td>
+					{{end}}
+				</tr>
+				<tr>
+					<th>Vocation:</th>
+					<td>{{or .Profession "None"}}</td>
+				</tr>
+				<tr>
+					<th>Level:</th>
+					<td>{{or .Level 1}}</td>
+				</tr>
+				<tr>
+					<th>World:</th>
+					<td>{{.World}}</td>
+				</tr>
+				<tr>
+					<th>Residence:</th>
+					<td>{{or .Residence "Rookgaard"}}</td>
+				</tr>
+				<tr>
+					<th>Last Login:</th>
+					<td>{{.LastLogin}}</td>
+				</tr>
+				<tr>
+					<th>Account Status:</th>
+					{{if .PremiumDays}}
+						<td>Premium Account</td>
+					{{else}}
+						<td>Free Account</td>
+					{{end}}
+				</tr>
+			</table>
+		</div>
+	{{end}}
+
+	<form class="box" action="/character" method="GET">
+		<h1>Search Character</h1>
+
+		<label for="search_name">CHARACTER NAME</label>
+		<input id="search_name" type="text" name="name"/>
+
+		<input type="submit" value="Search"/>
+	</form>
+{{template "_footer.tmpl" .Common}}

@@ -1,0 +1,13 @@
+{{template "_header.tmpl" .Common}}
+	<form class="box" action="/account" method="POST">
+		<h1>Login</h1>
+
+		<label for="login_account">ACCOUNT NUMBER</label>
+		<input id="login_account" type="password" name="account"/>
+
+		<label for="login_password">PASSWORD</label>
+		<input id="login_password" type="password" name="password"/>
+
+		<input type="submit" value="Login"/>
+	</form>
+{{template "_footer.tmpl" .Common}}

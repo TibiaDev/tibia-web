@@ -1,0 +1,62 @@
+{{template "_header.tmpl" .Common}}
+	<div class="box">
+		<h1>World Information</h1>
+		{{with .World}}
+			<table class="info">
+				<tr>
+					<th>Name:</th>
+					<td>{{.Name}}</td>
+				</tr>
+				<tr>
+					<th>Type:</th>
+					<td>{{.Type}}</td>
+				</tr>
+				<tr>
+					<th>Players Online:</th>
+					<td>{{.NumPlayers}}</td>
+				</tr>
+				<tr>
+					<th>Online Record:</th>
+					{{if .OnlineRecord}}
+						<td>{{.OnlineRecord}} players (on {{.OnlineRecordTime}})</td>
+					{{else}}
+						<td>None</td>
+					{{end}}
+				</tr>
+			</table>
+			<a class="button" href="/killstatistics?world={{.Name}}">Kill Statistics</a>
+		{{else}}
+			<p>No information available.</p>
+		{{end}}
+	</div>
+
+	<div class="box">
+		<h1>Players Online</h1>
+		{{if .OnlineCharacters}}
+			<table>
+				<tr>
+					<th>Name</th>
+					<th>Level</th>
+					<th>Vocation</th>
+					<th>World</th>
+					<th>Status</th>
+				</tr>
+				{{range .OnlineCharacters}}
+					<tr>
+						<td><a href="/character?name={{.Name}}">{{.Name}}</a></td>
+						<td>{{or .Level 1}}</td>
+						<td>{{or .Profession "None"}}</td>
+						<td>{{.World}}</td>
+						{{if .Online}}
+							<td style="color: #1A1;">Online</td>
+						{{else}}
+							<td style="color: #A11;">Offline</td>
+						{{end}}
+					</tr>
+				{{end}}
+			</table>
+		{{else}}
+			<p>There are no players online.</p>
+		{{end}}
+	</div>
+{{template "_footer.tmpl" .Common}}

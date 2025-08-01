@@ -1,0 +1,90 @@
+
+body {
+	background-color: #111;
+	color: #BBB;
+}
+
+p {
+	font-size: 1.2em
+}
+
+a {
+	color: #BEC4FF;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #8F94C0;
+	text-decoration: underline;
+}
+
+a.button {
+	margin: 5px 0px;
+	padding: 10px;
+	border: 3px solid #123;
+	border-radius: 5px;
+	display: inline-block;
+}
+
+table {
+	margin: 10px 0px;
+	padding: 5px;
+	width: 100%;
+	text-align: left;
+}
+
+th {
+	font-size: 1em;
+	font-weight: bold;
+}
+
+td {
+	word-break: break-all;
+}
+
+table.info th {
+	width: 40%;
+}
+
+.nav {
+	width: 700px;
+	margin: 10px 0px;
+	text-align: center;
+}
+
+.box {
+	width: 500px;
+	margin: 10px 0px;
+	padding: 5px;
+	border: 3px solid #222;
+	border-radius: 5px;
+}
+
+.box h1 {
+	margin: 10px 0px;
+}
+
+.box label {
+	margin: 20px 0px 5px 0px;
+	display: block;
+	font-size: 1.3em;
+	text-transform: uppercase;
+}
+
+.box input[type=text],
+.box input[type=password],
+.box select {
+	width: 80%;
+	padding: 3px;
+	display: block;
+	border-radius: 5px;
+	font-size: 1.1em;
+}
+
+.box input[type=submit] {
+	width: 60%;
+	height: 30px;
+	margin: 20px 0px;
+	display: block;
+	font-size: 1.2em;
+}

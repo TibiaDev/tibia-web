@@ -1,0 +1,23 @@
+{{template "_header.tmpl" .Common}}
+	<form class="box" action="/character/create" method="POST">
+		<h1>Create Account</h1>
+
+		<label for="character_name">NAME</label>
+		<input id="character_name" type="text" name="name"/>
+
+		<label for="character_sex">SEX</label>
+		<select id="character_sex" name="sex">
+			<option value="1">MALE</option>
+			<option value="2">FEMALE</option>
+		</select>
+
+		<label for="character_world">WORLD</label>
+		<select id="character_world" name="world">
+			{{range .Worlds}}
+				<option value="{{.Name}}">{{.Name}} ({{.Type}})</option>
+			{{end}}
+		</select>
+
+		<input type="submit" value="Create"/>
+	</form>
+{{template "_footer.tmpl" .Common}}

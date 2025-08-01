@@ -1,0 +1,22 @@
+{{template "_header.tmpl" .Common}}
+	<form class="box" action="/account/create" method="POST">
+		<h1>Create Account</h1>
+
+		<label for="create_account">ACCOUNT NUMBER</label>
+		<input id="create_account" type="password" name="account"/>
+
+		<label for="create_email">EMAIL</label>
+		<input id="create_email" type="text" name="email"/>
+
+		<label for="create_email_confirm">CONFIRM EMAIL</label>
+		<input id="create_email_confirm" type="text" name="email_confirm"/>
+
+		<label for="create_password">PASSWORD</label>
+		<input id="create_password" type="password" name="password"/>
+
+		<label for="create_password_confirm">CONFIRM PASSWORD</label>
+		<input id="create_password_confirm" type="password" name="password_confirm"/>
+
+		<input type="submit" value="Create"/>
+	</form>
+{{template "_footer.tmpl" .Common}}

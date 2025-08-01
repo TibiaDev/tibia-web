@@ -1,0 +1,28 @@
+{{template "_header.tmpl" .Common}}
+	<div class="box">
+		{{with .World}}
+			<h1>Kill Statistics - <a href="/world?name={{.Name}}">{{.Name}}</a></h1>
+		{{else}}
+			<h1>Kill Statistics</h1>
+		{{end}}
+
+		{{if .KillStatistics}}
+			<table>
+				<tr>
+					<th>Creature</th>
+					<th>Times Killed</th>
+					<th>Players Killed</th>
+				</tr>
+				{{range .KillStatistics}}
+					<tr>
+						<td>{{.RaceName}}</td>
+						<td>{{.TimesKilled}}</td>
+						<td>{{.PlayersKilled}}</td>
+					</tr>
+				{{end}}
+			</table>
+		{{else}}
+			<p>There are no kill statistics.</p>
+		{{end}}
+	</div>
+{{template "_footer.tmpl" .Common}}

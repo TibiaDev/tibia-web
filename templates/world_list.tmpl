@@ -1,0 +1,23 @@
+{{template "_header.tmpl" .Common}}
+	<div class="box">
+		<h1>Worlds</h1>
+		{{if .Worlds}}
+			<table>
+				<tr>
+					<th>Name</th>
+					<th>Type</th>
+					<th>Players Online</th>
+				</tr>
+				{{range .Worlds}}
+					<tr>
+						<td><a href="/world?name={{.Name}}">{{.Name}}</a></td>
+						<td>{{.Type}}</td>
+						<td>{{.NumPlayers}}</td>
+					</tr>
+				{{end}}
+			</table>
+		{{else}}
+			<p>Something went wrong when loading world data. Wait a few moments and try again.</p>
+		{{end}}
+	</div>
+{{template "_footer.tmpl" .Common}}

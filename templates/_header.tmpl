@@ -1,0 +1,31 @@
+{{/* HEADER START */}}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<meta name="description" content=""/>
+		<meta name="keywords" content=""/>
+		<meta name="author" content=""/>
+		<meta name="viewport" content="width=device-width, initial-scale=1"/>
+		<link rel="stylesheet" type="text/css" href="/res/css/style.css"/>
+		<title>{{.Title}}</title>
+	</head>
+
+	<body>
+		<center>
+			<div class="nav">
+				{{if .AccountID}}
+					<a class="button" href="/account">Account Summary</a>
+					<a class="button" href="/character/create">Create Character</a>
+					<a class="button" href="/account/logout">Logout</a>
+				{{else}}
+					<a class="button" href="/account">Login</a>
+					<a class="button" href="/account/create">Create Account</a>
+					<a class="button" href="/account/recover">Recover Account</a>
+				{{end}}
+				<br>
+				<a class="button" href="/character">Characters</a>
+				<a class="button" href="#">Houses</a>
+				<a class="button" href="/world">Worlds</a>
+			</div>
+{{/* HEADER END */}}

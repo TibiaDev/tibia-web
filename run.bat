@@ -1,0 +1,1 @@
+@CALL build.bat %* && CALL build\tibia-web

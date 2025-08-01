@@ -1,0 +1,65 @@
+{{template "_header.tmpl" .Common}}
+	{{with .Account}}
+		<div class="box">
+			<h1>Account Information</h1>
+			<table class="info">
+				<tr>
+					<th>Email:</th>
+					<td>{{.Email}}</td>
+				</tr>
+				<tr>
+					<th>Status:</th>
+					{{if eq .PremiumDays 1}}
+						<td style="color: #A11;">Premium Account (last day)</td>
+					{{else if gt .PremiumDays 1}}
+						<td>Premium Account ({{.PremiumDays}} days left)</td>
+					{{else}}
+						<td>Free Account</td>
+					{{end}}
+				</tr>
+				{{if .PendingPremiumDays}}
+					<tr>
+						<th>Pending Premium:</th>
+						{{if eq .PendingPremiumDays 1}}
+							<td>1 day</td>
+						{{else}}
+							<td>{{.PendingPremiumDays}} days</td>
+						{{end}}
+					</tr>
+				{{end}}
+			</table>
+		</div>
+		{{if .Characters}}
+			<div class="box">
+				<h1>Characters</h1>
+				<table>
+					<tr>
+						<th>Name</th>
+						<th>Level</th>
+						<th>Vocation</th>
+						<th>World</th>
+						<th>Status</th>
+					</tr>
+					{{range .Characters}}
+						<tr>
+							<td><a href="/character?name={{.Name}}">{{.Name}}</a></td>
+							<td>{{or .Level 1}}</td>
+							<td>{{or .Profession "None"}}</td>
+							<td>{{.World}}</td>
+							{{if .Online}}
+								<td style="color: #1A1;">Online</td>
+							{{else}}
+								<td style="color: #A11;">Offline</td>
+							{{end}}
+						</tr>
+					{{end}}
+				</table>
+			</div>
+		{{end}}
+	{{else}}
+		<div class="box">
+			<h1>Oops</h1>
+			<p>Something went wrong when loading your account's summary. Wait a few moments and try again.</p>
+		</div>
+	{{end}}
+{{template "_footer.tmpl" .Common}}
