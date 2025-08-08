@@ -98,6 +98,10 @@ func WebKVCallback(Key string, Value string) {
 		g_QueryManagerPort = ParseInteger(Value)
 	} else if strings.EqualFold(Key, "QueryManagerPassword") {
 		g_QueryManagerPassword = ParseString(Value)
+	} else if strings.EqualFold(Key, "MaxCachedAccounts") {
+		g_MaxCachedAccounts = ParseInteger(Value)
+	} else if strings.EqualFold(Key, "MaxCachedCharacters") {
+		g_MaxCachedCharacters = ParseInteger(Value)
 	} else if strings.EqualFold(Key, "CharacterRefreshInterval") {
 		g_CharacterRefreshInterval = ParseDuration(Value)
 	} else if strings.EqualFold(Key, "WorldsRefreshInterval") {
@@ -106,10 +110,6 @@ func WebKVCallback(Key string, Value string) {
 		g_OnlineCharactersRefreshInterval = ParseDuration(Value)
 	} else if strings.EqualFold(Key, "KillStatisticsRefreshInterval") {
 		g_KillStatisticsRefreshInterval = ParseDuration(Value)
-	} else if strings.EqualFold(Key, "MaxCachedAccounts") {
-		g_MaxCachedAccounts = ParseInteger(Value)
-	} else if strings.EqualFold(Key, "MaxCachedCharacters") {
-		g_MaxCachedCharacters = ParseInteger(Value)
 	} else {
 		g_LogWarn.Printf("Unknown config \"%v\"", Key)
 	}

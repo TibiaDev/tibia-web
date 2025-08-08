@@ -547,6 +547,15 @@ func GetAccountSummary(AccountID int) (Result int, Account TAccountSummary) {
 	for Index := 0; Index < len(g_AccountCache); Index += 1 {
 		Current := &g_AccountCache[Index]
 
+		// NOTE(fusion): Account data itself shouldn't change over time unless
+		// we do it ourselves, in which case `InvalidateAccountCachedData` is
+		// used to invalidate the cache entry. The problem is that the account
+		// summary also includes character data which will change, depending on
+		// activities on the game server.
+		if time.Since(Current.LastAccess) >= g_CharacterRefreshInterval {
+			*Current = TAccountCacheEntry{}
+		}
+
 		if Current.LastAccess.Before(LeastRecentlyUsedTime) {
 			LeastRecentlyUsedIndex = Index
 			LeastRecentlyUsedTime = Current.LastAccess
@@ -575,9 +584,6 @@ func GetAccountSummary(AccountID int) (Result int, Account TAccountSummary) {
 	return
 }
 
-// NOTE(fusion): Account data is different from other cached data because it
-// shouldn't change over time unless we do it ourselves, in which case we know
-// exactly when to invalidate cached data.
 func InvalidateAccountCachedData(AccountID int) {
 	g_QueryManagerMutex.Lock()
 	defer g_QueryManagerMutex.Unlock()
