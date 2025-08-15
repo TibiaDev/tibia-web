@@ -500,9 +500,7 @@ func InitQuery() bool {
 	g_Log.Printf("MaxCachedAccounts: %v", g_MaxCachedAccounts)
 	g_Log.Printf("MaxCachedCharacters: %v", g_MaxCachedCharacters)
 	g_Log.Printf("CharacterRefreshInterval: %v", g_CharacterRefreshInterval)
-	g_Log.Printf("WorldsRefreshInterval: %v", g_WorldsRefreshInterval)
-	g_Log.Printf("OnlineCharactersRefreshInterval: %v", g_OnlineCharactersRefreshInterval)
-	g_Log.Printf("KillStatisticsRefreshInterval: %v", g_KillStatisticsRefreshInterval)
+	g_Log.Printf("WorldRefreshInterval: %v", g_WorldRefreshInterval)
 
 	Result := g_QueryManagerConnection.Connect()
 	if !Result {
@@ -650,7 +648,7 @@ func GetWorlds() []TWorld {
 		Result, Worlds := g_QueryManagerConnection.GetWorlds()
 		if Result == 0 {
 			g_WorldCache = Worlds
-			g_WorldCacheRefreshTime = time.Now().Add(g_WorldsRefreshInterval)
+			g_WorldCacheRefreshTime = time.Now().Add(g_WorldRefreshInterval)
 		}
 	}
 	return g_WorldCache
@@ -692,7 +690,7 @@ func GetOnlineCharacters(World string) []TOnlineCharacter {
 			Entry = &g_OnlineCharactersCache[len(g_OnlineCharactersCache)-1]
 			Entry.World = World
 			Entry.Data = Characters
-			Entry.RefreshTime = time.Now().Add(g_OnlineCharactersRefreshInterval)
+			Entry.RefreshTime = time.Now().Add(g_WorldRefreshInterval)
 		}
 	}
 
@@ -729,7 +727,7 @@ func GetKillStatistics(World string) []TKillStatistics {
 			Entry = &g_KillStatisticsCache[len(g_KillStatisticsCache)-1]
 			Entry.World = World
 			Entry.Data = Stats
-			Entry.RefreshTime = time.Now().Add(g_KillStatisticsRefreshInterval)
+			Entry.RefreshTime = time.Now().Add(g_WorldRefreshInterval)
 		}
 	}
 

@@ -1,0 +1,22 @@
+# Basic SYSTEMD service file for the Tibia Web Server
+
+[Unit]
+Description=Tibia Web Server
+After=network.target
+Requires=tibia-querymanager.service
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=simple
+User=tibia-web
+Group=tibia-web
+ExecStart=/opt/tibia/web/web
+WorkingDirectory=/opt/tibia/web/
+Restart=always
+RestartSec=10
+LimitCORE=infinity
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=%n

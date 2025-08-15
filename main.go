@@ -60,12 +60,10 @@ var (
 	g_QueryManagerPassword string = ""
 
 	// Query Manager Cache Config
-	g_MaxCachedAccounts               = 4096
-	g_MaxCachedCharacters             = 4096
-	g_CharacterRefreshInterval        = 15 * time.Minute
-	g_WorldsRefreshInterval           = 15 * time.Minute
-	g_OnlineCharactersRefreshInterval = 15 * time.Minute
-	g_KillStatisticsRefreshInterval   = 30 * time.Minute
+	g_MaxCachedAccounts        = 4096
+	g_MaxCachedCharacters      = 4096
+	g_CharacterRefreshInterval = 15 * time.Minute
+	g_WorldRefreshInterval     = 15 * time.Minute
 
 	// Loggers
 	g_Log     = log.New(os.Stderr, "INFO ", log.Ldate|log.Ltime|log.Lmsgprefix)
@@ -104,12 +102,8 @@ func WebKVCallback(Key string, Value string) {
 		g_MaxCachedCharacters = ParseInteger(Value)
 	} else if strings.EqualFold(Key, "CharacterRefreshInterval") {
 		g_CharacterRefreshInterval = ParseDuration(Value)
-	} else if strings.EqualFold(Key, "WorldsRefreshInterval") {
-		g_WorldsRefreshInterval = ParseDuration(Value)
-	} else if strings.EqualFold(Key, "OnlineCharactersRefreshInterval") {
-		g_OnlineCharactersRefreshInterval = ParseDuration(Value)
-	} else if strings.EqualFold(Key, "KillStatisticsRefreshInterval") {
-		g_KillStatisticsRefreshInterval = ParseDuration(Value)
+	} else if strings.EqualFold(Key, "WorldRefreshInterval") {
+		g_WorldRefreshInterval = ParseDuration(Value)
 	} else {
 		g_LogWarn.Printf("Unknown config \"%v\"", Key)
 	}
