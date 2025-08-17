@@ -38,20 +38,12 @@
 					<th>Name</th>
 					<th>Level</th>
 					<th>Vocation</th>
-					<th>World</th>
-					<th>Status</th>
 				</tr>
 				{{range .OnlineCharacters}}
 					<tr>
 						<td><a href="/character?name={{.Name}}">{{.Name}}</a></td>
 						<td>{{or .Level 1}}</td>
 						<td>{{or .Profession "None"}}</td>
-						<td>{{.World}}</td>
-						{{if .Online}}
-							<td style="color: #1A1;">Online</td>
-						{{else}}
-							<td style="color: #A11;">Offline</td>
-						{{end}}
 					</tr>
 				{{end}}
 			</table>
