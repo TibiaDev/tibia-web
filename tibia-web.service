@@ -2,7 +2,7 @@
 
 [Unit]
 Description=Tibia Web Server
-After=network.target
+After=network.target tibia-querymanager.service
 Requires=tibia-querymanager.service
 
 [Install]
