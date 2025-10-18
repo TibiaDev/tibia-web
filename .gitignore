@@ -3,3 +3,4 @@ bin
 build
 local
 *.log
+config.cfg

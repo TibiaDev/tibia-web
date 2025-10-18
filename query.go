@@ -45,8 +45,10 @@ type (
 		Type             string
 		NumPlayers       int
 		MaxPlayers       int
-		OnlineRecord     int
-		OnlineRecordTime string
+		OnlinePeak       int
+		OnlinePeakTimestamp int
+		LastStartup      int
+		LastShutdown     int
 	}
 
 	TAccountSummary struct {
@@ -77,7 +79,7 @@ type (
 		Level       int
 		Profession  string
 		Residence   string
-		LastLogin   string
+		LastLogin   int
 		PremiumDays int
 		Online      bool
 		Deleted     bool
@@ -389,7 +391,7 @@ func (Connection *TQueryManagerConnection) GetCharacterProfile(CharacterName str
 		Character.Level = int(ReadBuffer.Read16())
 		Character.Profession = ReadBuffer.ReadString()
 		Character.Residence = ReadBuffer.ReadString()
-		Character.LastLogin = TimestampString(int(ReadBuffer.Read32()))
+		Character.LastLogin = int(ReadBuffer.Read32())
 		Character.PremiumDays = int(ReadBuffer.Read16())
 		Character.Online = ReadBuffer.ReadFlag()
 		Character.Deleted = ReadBuffer.ReadFlag()
@@ -422,8 +424,10 @@ func (Connection *TQueryManagerConnection) GetWorlds() (Result int, Worlds []TWo
 				Worlds[Index].Type = WorldTypeString(int(ReadBuffer.Read8()))
 				Worlds[Index].NumPlayers = int(ReadBuffer.Read16())
 				Worlds[Index].MaxPlayers = int(ReadBuffer.Read16())
-				Worlds[Index].OnlineRecord = int(ReadBuffer.Read16())
-				Worlds[Index].OnlineRecordTime = TimestampString(int(ReadBuffer.Read32()))
+				Worlds[Index].OnlinePeak = int(ReadBuffer.Read16())
+				Worlds[Index].OnlinePeakTimestamp = int(ReadBuffer.Read32())
+				Worlds[Index].LastStartup = int(ReadBuffer.Read32())
+				Worlds[Index].LastShutdown = int(ReadBuffer.Read32())
 			}
 		}
 	default:

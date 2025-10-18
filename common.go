@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 	"unicode"
+	"unicode/utf8"
 )
 
 // TReadBuffer
@@ -83,7 +84,11 @@ func (ReadBuffer *TReadBuffer) ReadString() string {
 
 	Result := ""
 	if ReadBuffer.CanRead(Length) {
-		Result = string(ReadBuffer.Buffer[ReadBuffer.Position:][:Length])
+		// IMPORTANT(fusion): The game server uses LATIN1 encoding, which forces
+		// the query manager to use LATIN1 encoding for text, at least on the
+		// protocol level.
+		Input := ReadBuffer.Buffer[ReadBuffer.Position:][:Length]
+		Result = string(Latin1ToUTF8(Input))
 	}
 	ReadBuffer.Position += Length
 	return Result
@@ -157,7 +162,11 @@ func (WriteBuffer *TWriteBuffer) Write32BE(Value uint32) {
 }
 
 func (WriteBuffer *TWriteBuffer) WriteString(String string) {
-	Length := len(String)
+	// IMPORTANT(fusion): The game server uses LATIN1 encoding, which forces
+	// the query manager to use LATIN1 encoding for text, at least on the
+	// protocol level.
+	Output := UTF8ToLatin1([]byte(String))
+	Length := len(Output)
 	if Length < 0xFFFF {
 		WriteBuffer.Write16(uint16(Length))
 	} else {
@@ -166,7 +175,7 @@ func (WriteBuffer *TWriteBuffer) WriteString(String string) {
 	}
 
 	if WriteBuffer.CanWrite(Length) {
-		copy(WriteBuffer.Buffer[WriteBuffer.Position:], String)
+		copy(WriteBuffer.Buffer[WriteBuffer.Position:], Output)
 	}
 	WriteBuffer.Position += Length
 }
@@ -370,11 +379,61 @@ func WorldTypeString(Type int) string {
 	}
 }
 
-func TimestampString(Timestamp int) string {
+func FormatTimestamp(Timestamp int) string {
 	String := "Never"
 	if Timestamp > 0 {
 		Time := time.Unix(int64(Timestamp), 0)
 		String = Time.Format("Jan 02 2006, 15:04:05 MST")
 	}
 	return String
+}
+
+func FormatDurationSince(Timestamp int) string {
+	String := "N/A"
+	if Timestamp > 0{
+		Duration := time.Since(time.Unix(int64(Timestamp), 0))
+		String = Duration.Truncate(time.Second).String()
+	}
+	return String
+}
+
+func UTF8FindNextLeadingByte(Buffer []byte) int {
+	Offset := 0
+	for Offset < len(Buffer) {
+		// NOTE(fusion): Allow the first byte to be a leading byte, in case we
+		// just want to advance from one leading byte to another.
+		if(Offset > 0 && utf8.RuneStart(Buffer[Offset])){
+			break
+		}
+		Offset += 1
+	}
+	return Offset
+}
+
+func UTF8ToLatin1(Buffer []byte) []byte {
+	ReadPos := 0
+	Result := []byte{}
+	for ReadPos < len(Buffer) {
+		Codepoint, Size := utf8.DecodeRune(Buffer[ReadPos:])
+		if Codepoint != utf8.RuneError {
+			ReadPos += Size
+		}else{
+			ReadPos += UTF8FindNextLeadingByte(Buffer[ReadPos:])
+		}
+
+		if Codepoint >= 0 && Codepoint <= 0xFF {
+			Result = append(Result, byte(Codepoint))
+		}else{
+			Result = append(Result, '?')
+		}
+	}
+	return Result
+}
+
+func Latin1ToUTF8(Buffer []byte) []byte {
+	Result := []byte{}
+	for ReadPos := range Buffer {
+		Result = utf8.AppendRune(Result, rune(Buffer[ReadPos]))
+	}
+	return Result
 }

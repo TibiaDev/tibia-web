@@ -58,7 +58,13 @@ var (
 
 func InitTemplates() bool {
 	var Err error
-	g_Templates, Err = template.ParseGlob("templates/*.tmpl")
+
+	CustomFuncs := template.FuncMap{
+		"FormatTimestamp": FormatTimestamp,
+		"FormatDurationSince": FormatDurationSince,
+	}
+
+	g_Templates, Err = template.New("").Funcs(CustomFuncs).ParseGlob("templates/*.tmpl")
 	if Err != nil {
 		g_LogErr.Printf("Failed to parse templates: %v", Err)
 		return false

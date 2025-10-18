@@ -563,7 +563,7 @@ func HandleWorld(Context *THttpRequestContext) {
 }
 
 func main() {
-	g_Log.Print("Tibia Web Server v0.1")
+	g_Log.Print("Tibia Web Server v0.2")
 	if !ReadConfig("config.cfg", WebKVCallback) {
 		return
 	}

@@ -16,11 +16,22 @@
 					<td>{{.NumPlayers}}</td>
 				</tr>
 				<tr>
-					<th>Online Record:</th>
-					{{if .OnlineRecord}}
-						<td>{{.OnlineRecord}} players (on {{.OnlineRecordTime}})</td>
+					<th>Online Peak:</th>
+					{{if eq .OnlinePeak 1}}
+						<td>{{.OnlinePeak}} player (on {{FormatTimestamp .OnlinePeakTimestamp}})</td>
+					{{else if gt .OnlinePeak 1}}
+						<td>{{.OnlinePeak}} players (on {{FormatTimestamp .OnlinePeakTimestamp}})</td>
 					{{else}}
 						<td>None</td>
+					{{end}}
+				</tr>
+				<tr>
+					{{if gt .LastStartup .LastShutdown}}
+						<th>Uptime:</th>
+						<td>{{FormatDurationSince .LastStartup}}</td>
+					{{else}}
+						<th>Downtime:</th>
+						<td style="color: #A11;">{{FormatDurationSince .LastShutdown}}</td>
 					{{end}}
 				</tr>
 			</table>
